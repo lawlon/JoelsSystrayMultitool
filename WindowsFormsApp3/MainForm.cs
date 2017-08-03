@@ -98,6 +98,7 @@ namespace SystrayMultitool
             // Connect the context menu and the icon.
 
             cpuIcon.ContextMenu = cpuCMenu;
+            cpuCMenu.MenuItems.Add(programName);
             cpuCMenu.MenuItems.Add(exitApp);
             cpuCMenu.MenuItems.Add(aboutApp);
             cpuCMenu.MenuItems.Add(appSettings);
@@ -105,7 +106,6 @@ namespace SystrayMultitool
             exitApp.Click += ExitApp_Click;
             aboutApp.Click += AboutApp_Click;
             appSettings.Click += appSettings_Click;
-            cpuCMenu.MenuItems.Add(programName);
 
             if (exitBool == true)
             {
@@ -344,10 +344,11 @@ namespace SystrayMultitool
             // Connect the context menu and the icon.
 
             availableRamIcon.ContextMenu = availableRamCMenu;
+            availableRamCMenu.MenuItems.Add(programName);
             availableRamCMenu.MenuItems.Add(exitAppRamUsg);
             availableRamCMenu.MenuItems.Add(aboutAppRamUsg);
             availableRamCMenu.MenuItems.Add(ramAppSettingsUsg);
-            availableRamCMenu.MenuItems.Add(programName);
+            
 
             exitAppRamUsg.Click += ExitApp_Click;
             aboutAppRamUsg.Click += AboutApp_Click;
