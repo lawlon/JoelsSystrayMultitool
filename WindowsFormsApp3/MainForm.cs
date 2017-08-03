@@ -64,6 +64,7 @@ namespace SystrayMultitool
         private void appSettings_Click(object sender, EventArgs e)
         {
             this.WindowState = FormWindowState.Normal;
+            this.ShowInTaskbar = true;
         }
 
         private void cpuTimerTick(object sender, EventArgs e)
@@ -120,6 +121,7 @@ namespace SystrayMultitool
         {
             cpuUsageMonitor.Properties.Settings.Default.Save();
             this.WindowState = FormWindowState.Minimized;
+            this.ShowInTaskbar = false;
         }
 
         // ram icon function / method
