@@ -22,5 +22,64 @@ namespace cpuUsageMonitor.Properties {
                 return defaultInstance;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool autoCheckCPU {
+            get {
+                return ((bool)(this["autoCheckCPU"]));
+            }
+            set {
+                this["autoCheckCPU"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool autoCheckRAM {
+            get {
+                return ((bool)(this["autoCheckRAM"]));
+            }
+            set {
+                this["autoCheckRAM"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool autoCheckAvailableRAM {
+            get {
+                return ((bool)(this["autoCheckAvailableRAM"]));
+            }
+            set {
+                this["autoCheckAvailableRAM"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        public global::System.Drawing.Color color {
+            get {
+                return ((global::System.Drawing.Color)(this["color"]));
+            }
+            set {
+                this["color"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool enablecolor {
+            get {
+                return ((bool)(this["enablecolor"]));
+            }
+            set {
+                this["enablecolor"] = value;
+            }
+        }
     }
 }
