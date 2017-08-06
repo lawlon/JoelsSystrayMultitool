@@ -22,13 +22,20 @@ namespace SystrayMultitool
         public PerformanceCounter cpuUsage = new PerformanceCounter("Processor", "% Processor Time", "_Total");
         public PerformanceCounter ramUsage = new PerformanceCounter("Memory", "Available MBytes");
         public PerformanceCounter availableRam = new PerformanceCounter("Memory", "Available MBytes");
+        public PerformanceCounter diskReadTotal = new PerformanceCounter("PhysicalDisk", "Disk Reads/sec", "_Total");
+        public NotifyIcon diskReadTotalIcon = new NotifyIcon();
         public NotifyIcon cpuIcon = new NotifyIcon();
         public NotifyIcon ramIcon = new NotifyIcon();
         public NotifyIcon availableRamIcon = new NotifyIcon();
         public SolidBrush brushVariable = new SolidBrush(Color.White);
         public ColorDialog customColorDialog = new ColorDialog();
         public bool enableCPUColor = false;
-
+        #region to do list for this program
+        /* figure out how to get cpu temps 
+        add disk usage with options for a specific disk to be selected
+        make program look beautiful xd
+        */
+#endregion
 
 
         public long ramInKbytes()
@@ -185,6 +192,7 @@ namespace SystrayMultitool
             enableCpuMonitoring.Checked = cpuUsageMonitor.Properties.Settings.Default.autoCheckCPU;
             enableRamMonitoring.Checked = cpuUsageMonitor.Properties.Settings.Default.autoCheckRAM;
             displayAvailableRAM.Checked = cpuUsageMonitor.Properties.Settings.Default.autoCheckAvailableRAM;
+            enableDiskUsageMonitoring.Checked = cpuUsageMonitor.Properties.Settings.Default.autoCheckDisk;
             customColorDialog.Color = cpuUsageMonitor.Properties.Settings.Default.color;
             enableCustomColorsBox.Checked = cpuUsageMonitor.Properties.Settings.Default.enablecolor;
             brushVariable.Color = cpuUsageMonitor.Properties.Settings.Default.color;
@@ -311,6 +319,26 @@ namespace SystrayMultitool
                 availableRamTimer.Stop();
                 cpuUsageMonitor.Properties.Settings.Default.Save();
             }
+            if (enableDiskUsageMonitoring.Checked)
+            {
+                cpuUsageMonitor.Properties.Settings.Default.autoCheckDisk = true;
+                diskReadTotalIcon.Visible = true;
+                cpuUsageMonitor.Properties.Settings.Default.Save();
+                if (!DiskReadTotalTimer.Enabled)
+                {
+                    DiskReadTotalTimer.Start();
+                }
+            }
+            if (!enableDiskUsageMonitoring.Checked)
+            {
+                cpuUsageMonitor.Properties.Settings.Default.autoCheckDisk = false;
+                diskReadTotalIcon.Visible = false;
+                cpuUsageMonitor.Properties.Settings.Default.Save();
+                if (DiskReadTotalTimer.Enabled)
+                {
+                    DiskReadTotalTimer.Stop();
+                }
+            }
         }
 
         // available ram function, makes a icon and makes it display the available ram in gigabytes and updates what like twice a second.
@@ -403,5 +431,54 @@ namespace SystrayMultitool
             }
         }
 
+        private void button1_Click(object sender, EventArgs e)
+        {
+            var test = new PerformanceCounterCategory("PhysicalDisk");
+            var counting = test.GetCounters();
+            MessageBox.Show(counting.ToString());
+        }
+
+        private void DiskReadTotalTimer_Tick(object sender, EventArgs e)
+        {
+
+            string formattedDiskUsage = string.Format("{0:00}", diskReadTotal.NextValue().ToString());
+
+            Bitmap diskBitmap = new Bitmap(16, 16);
+
+            Graphics diskGraphics = Graphics.FromImage(diskBitmap);
+
+            diskGraphics.Clear(Color.Transparent);
+            diskGraphics.DrawImageUnscaled(diskBitmap, 0, 0);
+            diskGraphics.DrawString(formattedDiskUsage,
+                new Font("Trebuchet MS", 8.8f, FontStyle.Regular, GraphicsUnit.Pixel),
+                brushVariable,
+                new RectangleF(0, 3, 16, 13));
+            diskGraphics.TextRenderingHint = System.Drawing.Text.TextRenderingHint.SingleBitPerPixelGridFit;
+            diskReadTotalIcon.Icon = Icon.FromHandle(diskBitmap.GetHicon());
+            diskReadTotalIcon.Text = "Disk usage % (All Disks)";
+            ContextMenu diskTotalCMENU = new ContextMenu();
+            MenuItem exitAppRam = new MenuItem("Exit");
+            MenuItem aboutAppRam = new MenuItem("About");
+            MenuItem ramAppSettings = new MenuItem("Settings");
+            MenuItem programName = new MenuItem("Joel's Systray Multitool V 1.0");
+
+            // Connect the context menu and the icon.
+
+            diskReadTotalIcon.ContextMenu = diskTotalCMENU;
+            diskTotalCMENU.MenuItems.Add(programName);
+            diskTotalCMENU.MenuItems.Add(exitAppRam);
+            diskTotalCMENU.MenuItems.Add(aboutAppRam);
+            diskTotalCMENU.MenuItems.Add(ramAppSettings);
+
+            exitAppRam.Click += ExitApp_Click;
+            aboutAppRam.Click += AboutApp_Click;
+            ramAppSettings.Click += appSettings_Click;
+
+            if (exitBool == true)
+            {
+                this.Close();
+
+            }
+        }
     }
 }

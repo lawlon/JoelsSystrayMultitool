@@ -81,5 +81,17 @@ namespace cpuUsageMonitor.Properties {
                 this["enablecolor"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool autoCheckDisk {
+            get {
+                return ((bool)(this["autoCheckDisk"]));
+            }
+            set {
+                this["autoCheckDisk"] = value;
+            }
+        }
     }
 }
