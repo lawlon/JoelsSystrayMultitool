@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.26430.6
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "cpuUsageMonitor", "WindowsFormsApp3\cpuUsageMonitor.csproj", "{39A2DE7D-AE40-47E8-A69D-0C58C6AEEA08}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Joels systray multitool", "Joels systray multitool\Joels systray multitool.csproj", "{39A2DE7D-AE40-47E8-A69D-0C58C6AEEA08}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
