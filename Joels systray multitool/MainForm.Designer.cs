@@ -41,7 +41,6 @@
             this.changeCustomColors = new System.Windows.Forms.Button();
             this.enableCustomColorsBox = new System.Windows.Forms.CheckBox();
             this.DiskReadTotalTimer = new System.Windows.Forms.Timer(this.components);
-            this.enableDiskUsageMonitoring = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // cpuTimer
@@ -136,7 +135,7 @@
             // enableCustomColorsBox
             // 
             this.enableCustomColorsBox.AutoSize = true;
-            this.enableCustomColorsBox.Location = new System.Drawing.Point(9, 173);
+            this.enableCustomColorsBox.Location = new System.Drawing.Point(9, 127);
             this.enableCustomColorsBox.Name = "enableCustomColorsBox";
             this.enableCustomColorsBox.Size = new System.Drawing.Size(126, 17);
             this.enableCustomColorsBox.TabIndex = 10;
@@ -149,16 +148,6 @@
             this.DiskReadTotalTimer.Interval = 300;
             this.DiskReadTotalTimer.Tick += new System.EventHandler(this.DiskReadTotalTimer_Tick);
             // 
-            // enableDiskUsageMonitoring
-            // 
-            this.enableDiskUsageMonitoring.AutoSize = true;
-            this.enableDiskUsageMonitoring.Location = new System.Drawing.Point(9, 118);
-            this.enableDiskUsageMonitoring.Name = "enableDiskUsageMonitoring";
-            this.enableDiskUsageMonitoring.Size = new System.Drawing.Size(114, 17);
-            this.enableDiskUsageMonitoring.TabIndex = 11;
-            this.enableDiskUsageMonitoring.Text = "Display disk usage";
-            this.enableDiskUsageMonitoring.UseVisualStyleBackColor = true;
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -166,7 +155,6 @@
             this.BackColor = System.Drawing.SystemColors.Control;
             this.ClientSize = new System.Drawing.Size(359, 328);
             this.ControlBox = false;
-            this.Controls.Add(this.enableDiskUsageMonitoring);
             this.Controls.Add(this.enableCustomColorsBox);
             this.Controls.Add(this.changeCustomColors);
             this.Controls.Add(this.runOnStartupBox);
@@ -197,7 +185,6 @@
         private System.Windows.Forms.Button changeCustomColors;
         private System.Windows.Forms.CheckBox enableCustomColorsBox;
         private System.Windows.Forms.Timer DiskReadTotalTimer;
-        private System.Windows.Forms.CheckBox enableDiskUsageMonitoring;
     }
 }
 
