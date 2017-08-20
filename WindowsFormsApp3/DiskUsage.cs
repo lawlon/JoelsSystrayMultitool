@@ -11,9 +11,14 @@ namespace cpuUsageMonitor
 
         private readonly PerformanceCounter diskReadTotal = new PerformanceCounter("PhysicalDisk", "Disk Reads/sec", "_Total");
         public readonly NotifyIcon diskReadTotalIcon = new NotifyIcon();
-        public readonly SolidBrush brush = new SolidBrush(Color.White);
-        public MainForm mainForm = new MainForm();
+        public  SolidBrush brush = new SolidBrush(Color.White);
+        private MainForm mainForm = new MainForm();
         public Timer diskTimer = new Timer();
+        ContextMenu settingsCMenu = new ContextMenu();
+        MenuItem exitAppRamUsg = new MenuItem("Exit");
+        MenuItem aboutAppRamUsg = new MenuItem("About");
+        MenuItem ramAppSettingsUsg = new MenuItem("Settings");
+        MenuItem programName = new MenuItem("Joel's Systray Multitool V 1.1");
 
 
         public DiskUsage()
@@ -22,7 +27,7 @@ namespace cpuUsageMonitor
             diskTimer.Tick += DiskReadTick;
             diskTimer.Start();
         }
-
+        // destructor, disposes stuff.
         ~DiskUsage()
         {
             diskTimer?.Stop();
@@ -35,6 +40,7 @@ namespace cpuUsageMonitor
 
             diskReadTotalIcon?.Icon?.Dispose();
             diskReadTotalIcon?.Dispose();
+            
         }
 
         public void DiskReadTick(object sender, EventArgs e)
@@ -59,17 +65,12 @@ namespace cpuUsageMonitor
             diskReadTotalIcon.Icon = Icon.FromHandle(diskBitmap.GetHicon());
             diskReadTotalIcon.Text = "Disk usage % (All Disks)";
 
-            ContextMenu setingsMenu = new ContextMenu();
-            MenuItem exitAppRamUsg = new MenuItem("Exit");
-            MenuItem aboutAppRamUsg = new MenuItem("About");
-            MenuItem ramAppSettingsUsg = new MenuItem("Settings");
-            MenuItem programName = new MenuItem("Joel's Systray Multitool V 1.1");
 
 
-            setingsMenu.MenuItems.Add(programName);
-            setingsMenu.MenuItems.Add(exitAppRamUsg);
-            setingsMenu.MenuItems.Add(aboutAppRamUsg);
-            setingsMenu.MenuItems.Add(ramAppSettingsUsg);
+            settingsCMenu.MenuItems.Add(programName);
+            settingsCMenu.MenuItems.Add(exitAppRamUsg);
+            settingsCMenu.MenuItems.Add(aboutAppRamUsg);
+            settingsCMenu.MenuItems.Add(ramAppSettingsUsg);
 
             exitAppRamUsg.Click += ExitApp_Click;
             aboutAppRamUsg.Click += AboutApp_Click;

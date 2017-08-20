@@ -13,7 +13,13 @@
         public PerformanceCounter cpuUsage = new PerformanceCounter("Processor", "% Processor Time", "_Total");
         public Timer cpuTimer = new Timer();
         public MainForm mainForm = new MainForm();
-        
+        ContextMenu settingsCMenu = new ContextMenu();
+        MenuItem exitAppRamUsg = new MenuItem("Exit");
+        MenuItem aboutAppRamUsg = new MenuItem("About");
+        MenuItem ramAppSettingsUsg = new MenuItem("Settings");
+        MenuItem programName = new MenuItem("Joel's Systray Multitool V 1.1");
+
+
         public CpuUsage()
         {
             cpuTimer.Interval = 350;
@@ -43,22 +49,6 @@
         public void cpuTimerTick(object sender, EventArgs e)
         {
 
-            ContextMenu setingsMenu = new ContextMenu();
-            MenuItem exitAppRamUsg = new MenuItem("Exit");
-            MenuItem aboutAppRamUsg = new MenuItem("About");
-            MenuItem ramAppSettingsUsg = new MenuItem("Settings");
-            MenuItem programName = new MenuItem("Joel's Systray Multitool V 1.1");
-
-
-            setingsMenu.MenuItems.Add(programName);
-            setingsMenu.MenuItems.Add(exitAppRamUsg);
-            setingsMenu.MenuItems.Add(aboutAppRamUsg);
-            setingsMenu.MenuItems.Add(ramAppSettingsUsg);
-
-            exitAppRamUsg.Click += ExitApp_Click;
-            aboutAppRamUsg.Click += AboutApp_Click;
-            ramAppSettingsUsg.Click += appSettings_Click;
-
             Bitmap cpuBitmap = new Bitmap(16, 16);
             Graphics cpuGraphics = Graphics.FromImage(cpuBitmap);
 
@@ -74,6 +64,17 @@
 
             cpuIcon.Icon = Icon.FromHandle(cpuBitmap.GetHicon());
             cpuIcon.Text = "CPU usage (%)";
+
+
+            settingsCMenu.MenuItems.Add(programName);
+            settingsCMenu.MenuItems.Add(exitAppRamUsg);
+            settingsCMenu.MenuItems.Add(aboutAppRamUsg);
+            settingsCMenu.MenuItems.Add(ramAppSettingsUsg);
+
+            exitAppRamUsg.Click += ExitApp_Click;
+            aboutAppRamUsg.Click += AboutApp_Click;
+            ramAppSettingsUsg.Click += appSettings_Click;
+
         }
 
         public void AboutApp_Click(object sender, EventArgs e)
