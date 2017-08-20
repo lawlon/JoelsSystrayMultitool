@@ -52,6 +52,11 @@
 
             settingsCMenu?.Dispose();
 
+            exitAppRamUsg?.Dispose();
+            aboutAppRamUsg?.Dispose();
+            ramAppSettingsUsg?.Dispose();
+            programName?.Dispose();
+
         }
 
         public void ramTimer_Tick(object sender, EventArgs e)

@@ -39,6 +39,14 @@ namespace cpuUsageMonitor
         {
             brush?.Dispose();
 
+            setingsMenu?.Dispose();
+
+            exitAppRamUsg?.Dispose();
+            aboutAppRamUsg?.Dispose();
+            ramAppSettingsUsg?.Dispose();
+            programName?.Dispose();
+
+            loadingIcon?.Dispose();
         }
 
         private void AboutApp_Click(object sender, EventArgs e)
@@ -208,12 +216,7 @@ namespace cpuUsageMonitor
             }
         }
 
-        private void button1_Click(object sender, EventArgs e)
-        {
-            var test = new PerformanceCounterCategory("PhysicalDisk");
-            var counting = test.GetCounters();
-            MessageBox.Show(counting.ToString());
-        }
+
 
         #region to do list for this program
 
@@ -224,6 +227,9 @@ namespace cpuUsageMonitor
 
         #endregion to do list for this program
 
+        private void displayAvailableRAM_CheckedChanged(object sender, EventArgs e)
+        {
 
+        }
     }
 }

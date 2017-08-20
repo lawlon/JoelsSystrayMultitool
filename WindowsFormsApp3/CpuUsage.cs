@@ -20,12 +20,9 @@
         MenuItem programName = new MenuItem("Joel's Systray Multitool V 1.1");
 
 
-        public CpuUsage()
-        {
-            cpuTimer.Interval = 350;
-        }
 
-        public CpuUsage(int interval)
+
+        public CpuUsage(int interval = 350)
         {
             cpuTimer.Interval = interval;
             cpuTimer.Tick += cpuTimerTick;
@@ -44,6 +41,13 @@
 
             cpuIcon?.Icon?.Dispose();
             cpuIcon?.Dispose();
+
+            settingsCMenu?.Dispose();
+
+            exitAppRamUsg?.Dispose();
+            aboutAppRamUsg?.Dispose();
+            ramAppSettingsUsg?.Dispose();
+            programName?.Dispose();
         }
 
         public void cpuTimerTick(object sender, EventArgs e)

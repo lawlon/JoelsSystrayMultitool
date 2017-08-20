@@ -40,7 +40,14 @@ namespace cpuUsageMonitor
 
             diskReadTotalIcon?.Icon?.Dispose();
             diskReadTotalIcon?.Dispose();
-            
+
+            settingsCMenu?.Dispose();
+
+            exitAppRamUsg?.Dispose();
+            aboutAppRamUsg?.Dispose();
+            ramAppSettingsUsg?.Dispose();
+            programName?.Dispose();
+
         }
 
         public void DiskReadTick(object sender, EventArgs e)
