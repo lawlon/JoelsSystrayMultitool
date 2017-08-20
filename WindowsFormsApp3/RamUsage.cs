@@ -11,11 +11,12 @@
 
     internal class RamUsage
     {
+        private readonly PerformanceCounter ramUsageVarLol = new PerformanceCounter("Memory", "Available MBytes");
         public NotifyIcon ramIcon = new NotifyIcon();
         public NotifyIcon availableRamIcon = new NotifyIcon();
         public Timer ramTimer = new Timer();
         public Timer availableRamTimer = new Timer();
-        private readonly PerformanceCounter ramUsageVarLol = new PerformanceCounter("Memory", "Available MBytes");
+        
         public SolidBrush brushvariable = new SolidBrush(Color.White);
         public Ram GetRam = new Ram();
         public MainForm mainform = new MainForm();
