@@ -43,8 +43,6 @@
             availableRamIcon?.Icon.Dispose();
             availableRamIcon?.Dispose();
 
-            ramUsageVarLol?.Dispose();
-            ramUsageVarLol?.Close();
 
             brushvariable?.Dispose();
 
