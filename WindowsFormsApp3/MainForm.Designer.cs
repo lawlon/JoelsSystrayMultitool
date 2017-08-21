@@ -91,6 +91,7 @@
             this.displayAvailableRAM.TabIndex = 5;
             this.displayAvailableRAM.Text = "Display Available RAM";
             this.displayAvailableRAM.UseVisualStyleBackColor = true;
+            this.displayAvailableRAM.CheckedChanged += new System.EventHandler(this.displayAvailableRAM_CheckedChanged);
             // 
             // runOnStartupBox
             // 

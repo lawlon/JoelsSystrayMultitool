@@ -8,6 +8,7 @@
 
     public class RamUsage
     {
+
         private readonly NotifyIcon ramIcon = new NotifyIcon();
         private readonly NotifyIcon availableRamIcon = new NotifyIcon();
 
@@ -61,6 +62,7 @@
             exitAppRamUsg.Click += ExitApp_Click;
             aboutAppRamUsg.Click += AboutApp_Click;
             ramAppSettingsUsg.Click += appSettings_Click;
+
         }
 
         private void PerformanceCounterEventHandler(object sender, PerformanceCounterEventArgs performanceCounterEventArgs)

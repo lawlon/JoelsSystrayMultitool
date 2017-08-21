@@ -13,6 +13,7 @@
         //public MainForm mainForm = new MainForm();
         private readonly ContextMenu settingsCMenu = new ContextMenu();
 
+
         public CpuUsage()
         {
             CpuUtil c = new CpuUtil();
@@ -42,12 +43,12 @@
             settingsCMenu.MenuItems.Add(exitAppRamUsg);
             settingsCMenu.MenuItems.Add(aboutAppRamUsg);
             settingsCMenu.MenuItems.Add(ramAppSettingsUsg);
-
+          
             cpuIcon.ContextMenu = settingsCMenu;
-
             exitAppRamUsg.Click += ExitApp_Click;
             aboutAppRamUsg.Click += AboutApp_Click;
             ramAppSettingsUsg.Click += appSettings_Click;
+
         }
 
         public void DrawCpuUsage(object sender, PerformanceCounterEventArgs e)

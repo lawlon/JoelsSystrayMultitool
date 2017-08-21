@@ -206,12 +206,7 @@
             }
         }
 
-        private void button1_Click(object sender, EventArgs e)
-        {
-            var test = new PerformanceCounterCategory("PhysicalDisk");
-            var counting = test.GetCounters();
-            MessageBox.Show(counting.ToString());
-        }
+
 
         #region to do list for this program
 
