@@ -1,52 +1,69 @@
-﻿using cpuUsageMonitor.Properties;
-using Microsoft.Win32;
-using System;
-using System.Diagnostics;
-using System.Drawing;
-using System.Drawing.Text;
-using System.Windows.Forms;
-
-namespace cpuUsageMonitor
-
+﻿namespace cpuUsageMonitor
 {
+    using Microsoft.Win32;
+    using Properties;
+    using System;
+    using System.Diagnostics;
+    using System.Drawing;
+    using System.Drawing.Text;
+    using System.Windows.Forms;
+
     public partial class MainForm : Form
     {
-        public NotifyIcon loadingIcon = new NotifyIcon();
-        public ColorDialog customColorDialog = new ColorDialog();
-        public bool enableCPUColor = false;
-        public bool exitBool;
-        public SolidBrush brush = new SolidBrush(Color.White);
-        private RamUsage lolramusage = new RamUsage();
-        private CpuUsage lolcpu = new CpuUsage();
-        private DiskUsage loldisk = new DiskUsage();
-        private RegistryKey regkey =
-            Registry.CurrentUser.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", true);
-        ContextMenu setingsMenu = new ContextMenu();
-        MenuItem exitAppRamUsg = new MenuItem("Exit");
-        MenuItem aboutAppRamUsg = new MenuItem("About");
-        MenuItem ramAppSettingsUsg = new MenuItem("Settings");
-        MenuItem programName = new MenuItem("Joel's Systray Multitool V 1.1");
+        private readonly NotifyIcon loadingIcon = new NotifyIcon();
+        private readonly ColorDialog customColorDialog = new ColorDialog();
+        private readonly ContextMenu settingsMenu = new ContextMenu();
 
+        //public bool enableCPUColor = false;
+        //public bool exitBool;
+
+        private readonly SolidBrush brush = new SolidBrush(Color.White);
+
+        private readonly RegistryKey regkey =
+            Registry.CurrentUser.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", true);
 
         public MainForm()
         {
             InitializeComponent();
             ShowInTaskbar = false;
             WindowState = FormWindowState.Minimized;
+
+            InitializeIcon();
+            InitializeClasses();
+        }
+
+        private void InitializeIcon()
+        {
+            this.loadingIcon.Visible = true;
+            this.loadingIcon.Text = "Access Settings";
+
+            MenuItem exitAppRamUsg = new MenuItem("Exit");
+            MenuItem aboutAppRamUsg = new MenuItem("About");
+            MenuItem ramAppSettingsUsg = new MenuItem("Settings");
+            MenuItem programName = new MenuItem("Joel's Systray Multitool V 1.1");
+
+            settingsMenu.MenuItems.Add(programName);
+            settingsMenu.MenuItems.Add(exitAppRamUsg);
+            settingsMenu.MenuItems.Add(aboutAppRamUsg);
+            settingsMenu.MenuItems.Add(ramAppSettingsUsg);
+
+            loadingIcon.ContextMenu = settingsMenu;
+
+            exitAppRamUsg.Click += ExitApp_Click;
+            aboutAppRamUsg.Click += AboutApp_Click;
+            ramAppSettingsUsg.Click += appSettings_Click;
+        }
+
+        private void InitializeClasses()
+        {
+            RamUsage ramUsage = new RamUsage();
+            CpuUsage cpuUsage = new CpuUsage();
+            DiskUsage diskUsage = new DiskUsage();
         }
 
         ~MainForm()
         {
             brush?.Dispose();
-
-            setingsMenu?.Dispose();
-
-            exitAppRamUsg?.Dispose();
-            aboutAppRamUsg?.Dispose();
-            ramAppSettingsUsg?.Dispose();
-            programName?.Dispose();
-
-            loadingIcon?.Dispose();
         }
 
         private void AboutApp_Click(object sender, EventArgs e)
@@ -57,7 +74,6 @@ namespace cpuUsageMonitor
 
         private void ExitApp_Click(object sender, EventArgs e)
         {
-
             //changed to true so the next tick of the timer the application will exit.
         }
 
@@ -78,35 +94,19 @@ namespace cpuUsageMonitor
 
         private void MainForm_Load(object sender, EventArgs e)
         {
-            
-           
-
             enableCpuMonitoring.Checked = Settings.Default.autoCheckCPU;
             enableRamMonitoring.Checked = Settings.Default.autoCheckRAM;
             displayAvailableRAM.Checked = Settings.Default.autoCheckAvailableRAM;
+
             enableDiskUsageMonitoring.Checked = Settings.Default.autoCheckDisk;
             customColorDialog.Color = Settings.Default.color;
             enableCustomColorsBox.Checked = Settings.Default.enablecolor;
             brush.Color = Settings.Default.color;
- 
-
 
             #region IconStuff
 
-            if(!enableCpuMonitoring.Checked && !enableDiskUsageMonitoring.Checked && !enableRamMonitoring.Checked && !displayAvailableRAM.Checked)
+            if (!enableCpuMonitoring.Checked && !enableDiskUsageMonitoring.Checked && !enableRamMonitoring.Checked && !displayAvailableRAM.Checked)
             {
-               
-
-                
-                setingsMenu.MenuItems.Add(programName);
-                setingsMenu.MenuItems.Add(exitAppRamUsg);
-                setingsMenu.MenuItems.Add(aboutAppRamUsg);
-                setingsMenu.MenuItems.Add(ramAppSettingsUsg);
-
-                exitAppRamUsg.Click += ExitApp_Click;
-                aboutAppRamUsg.Click += AboutApp_Click;
-                ramAppSettingsUsg.Click += appSettings_Click;
-
                 var loadingBitmap = new Bitmap(16, 16);
                 var loadingGraphics = Graphics.FromImage(loadingBitmap);
                 loadingGraphics.Clear(Color.Transparent);
@@ -117,12 +117,14 @@ namespace cpuUsageMonitor
                     new RectangleF(0, 3, 16, 13));
                 loadingGraphics.TextRenderingHint = TextRenderingHint.SingleBitPerPixelGridFit;
                 loadingIcon.Icon = Icon.FromHandle(loadingBitmap.GetHicon());
-                loadingIcon.Visible = true;
-                loadingIcon.Text = "acsess settings";
+
                 this.ShowInTaskbar = true;
             }
-            #endregion
-            #region this gonna be really fucking ugly sorry lads
+
+            #endregion IconStuff
+
+            /*#region this gonna be really fucking ugly sorry lads
+
             if (cpuUsageMonitor.Properties.Settings.Default.autoCheckAvailableRAM == true)
             {
                 lolramusage.availableRamIcon.Visible = true;
@@ -160,18 +162,8 @@ namespace cpuUsageMonitor
                 loldisk.diskReadTotalIcon.Visible = false;
             }
 
-
-
-            #endregion
-            #region assigning functions, even more ugly lol
-            lolramusage.availableRamTimer.Tick += lolramusage.availableRamTimer_Tick;
-            lolramusage.ramTimer.Tick += lolramusage.ramTimer_Tick;
-            loldisk.diskTimer.Tick += loldisk.DiskReadTick;
-            lolcpu.cpuTimer.Tick += lolcpu.cpuTimerTick;
-            
-#endregion 
+            #endregion this gonna be really fucking ugly sorry lads*/
         }
-
 
         // saves settings when the application exits.
 
@@ -194,15 +186,13 @@ namespace cpuUsageMonitor
 
         private void enableCustomColors(object sender, EventArgs e)
         {
-            
-            brush.Color = customColorDialog.Color;
-            lolramusage.brushvariable.Color = customColorDialog.Color;
+            /*brush.Color = customColorDialog.Color;
+            //lolramusage.brushvariable.Color = customColorDialog.Color;
             loldisk.brush.Color = customColorDialog.Color;
             lolcpu.brush.Color = customColorDialog.Color;
-            lolramusage.brushvariable.Color = customColorDialog.Color;
+            //lolramusage.brushvariable.Color = customColorDialog.Color;
             loldisk.brush.Color = customColorDialog.Color;
-            lolcpu.brush.Color = customColorDialog.Color;
-
+            lolcpu.brush.Color = customColorDialog.Color;*/
         }
 
         // brings up the custom colors dialog if "enable custom colors" is checked.
@@ -226,10 +216,5 @@ namespace cpuUsageMonitor
         */
 
         #endregion to do list for this program
-
-        private void displayAvailableRAM_CheckedChanged(object sender, EventArgs e)
-        {
-
-        }
     }
 }
